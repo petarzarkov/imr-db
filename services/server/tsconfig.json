@@ -1,0 +1,40 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "target": "ESNext",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "sourceMap": false,
+        "declaration": false,
+        "strict": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "forceConsistentCasingInFileNames": true,
+        "strictNullChecks": true,
+        "alwaysStrict": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        "strictPropertyInitialization": false,
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "incremental": false,
+        "removeComments": false,
+        "paths": {
+            "@db/*": ["./db/*"],
+            "@api/*": ["./app/api/*"],
+            "@const": ["./app/const"],
+            "@repos": ["./app/repos"],
+            "@middlewares/*": ["./app/middlewares/*"],
+            "@modules/*": ["./app/modules/*"],
+            "@utils": ["./app/utils"],
+            "@interceptors/*": ["./app/interceptors/*"],
+            "@decorators/*": ["./app/decorators/*"],
+            "@filters/*": ["./app/filters/*"],
+            "@contracts/*": ["app/contracts/*"]
+        }
+    }
+}

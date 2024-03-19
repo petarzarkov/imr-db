@@ -1,0 +1,60 @@
+{
+    "name": "imr-db",
+    "description": "Infinite Magic Raid Web App, DB, and API",
+    "keywords": [
+        "imr",
+        "app",
+        "api",
+        "db",
+        "infinite",
+        "magic",
+        "raid",
+        "Infinite Magic Raid"
+    ],
+    "author": {
+        "name": "Petar Zarkov",
+        "email": "pzarko1@gmail.com"
+    },
+    "license": "ISC",
+    "version": "0.0.1",
+    "packageManager": "pnpm@^8.6.2",
+    "engines": {
+        "node": ">= 18.12.0",
+        "pnpm": ">= 8.6.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/petarzarkov/imr-db.git"
+    },
+    "homepage": "TBD",
+    "scripts": {
+        "prepare": "husky",
+        "preinstall": "npx only-allow pnpm",
+        "format": "prettier --write --cache .",
+        "typecheck": "pnpm -r --parallel tsc --noEmit",
+        "clean": "pnpm -r --parallel --stream run clean",
+        "build": "pnpm run clean && pnpm -r --parallel --stream run build",
+        "dev": "pnpm -r --parallel --stream run dev",
+        "lint": "pnpm -r --parallel --stream run lint",
+        "lint:fix": "pnpm -r --parallel --stream run lint --fix",
+        "pretty": "prettier . --write"
+    },
+    "dependencies": {
+        "rimraf": "3.0.2",
+        "uuid": "^9.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.11.29",
+        "@types/uuid": "^9.0.8",
+        "@typescript-eslint/eslint-plugin": "^7.3.1",
+        "@typescript-eslint/parser": "^7.3.1",
+        "eslint": "^8.57.0",
+        "nodemon": "^3.1.0",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
+        "husky": "^9.0.11",
+        "prettier": "^3.2.5",
+        "lint-staged": "^15.2.2",
+        "typescript": "^5.4.2"
+    }
+}

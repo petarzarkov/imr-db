@@ -1,0 +1,27 @@
+version: "3.5"
+services:
+    imr-db:
+        image: "postgres:12.3"
+        hostname: imr-db
+        container_name: imr-db
+        environment:
+            - PGPASSWORD=postgres
+            - POSTGRES_DB=imr-db
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_PORT=6544
+            - PGPORT=6544
+        networks:
+            - imr-db
+        ports:
+            - 6544:6544
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 2s
+            timeout: 5s
+            retries: 10
+
+networks:
+    imr-db:
+        name: imr-db-network
+        driver: bridge

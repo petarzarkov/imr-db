@@ -1,0 +1,14 @@
+{
+    "sourceRoot": "app",
+    "compilerOptions": {
+        "plugins": [
+            {
+                "name": "@nestjs/swagger",
+                "options": {
+                    "dtoFileNameSuffix": ["request.ts", "response.ts", "entity.ts"],
+                    "introspectComments": true
+                }
+            }
+        ]
+    }
+}
