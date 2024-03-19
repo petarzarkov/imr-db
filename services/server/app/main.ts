@@ -8,8 +8,12 @@ import { BEARER_TOKEN_DEFAULT, BEARER_TOKEN_DEFAULT_NAME, REQUEST_ID_HEADER_KEY,
 import { UnhandledRoutes } from "@filters/unhandled-routes";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { Logger } from "@nestjs/common";
+import { initDBData } from "@db/seeds/run";
 
 async function bootstrap(module: typeof AppModule) {
+
+    await initDBData();
+
     const app = await NestFactory.create<NestFastifyApplication>(
         module,
         new FastifyAdapter({
@@ -66,7 +70,9 @@ async function bootstrap(module: typeof AppModule) {
 
     await app.listen(appConfig.port, "0.0.0.0");
 
-    logger.log(`Application started at ${await app.getUrl()}`);
+    const appUrl = await app.getUrl();
+    logger.log(`Application started at ${appUrl}`);
+    logger.log(`Docs at ${appUrl}/${appConfig.docs.path}`);
 }
 
 void bootstrap(AppModule);

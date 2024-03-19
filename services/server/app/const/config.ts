@@ -14,6 +14,10 @@ export interface DefaultConfig {
     };
     db: {
         name: string;
+        host: string;
+        username: string;
+        password: string;
+        port: number;
     };
 }
 
@@ -34,6 +38,10 @@ export const defaultConfig = () => {
         },
         db: {
             name: process.env.DB_NAME || "imr-db",
+            host: process.env.DB_HOST || "imr-db",
+            port: Number(process.env.DB_PORT) || 6544,
+            username: process.env.DB_USERNAME || "imr-db",
+            password: process.env.DB_PASSWORD || "imr-db",
         },
     };
 

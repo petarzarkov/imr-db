@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import React from "react";
 import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { BackTop, Footer, NavBar } from "@components";
 
-export const Layout: FC = () => {
+export const Layout = () => {
     return (
         <>
             <NavBar />

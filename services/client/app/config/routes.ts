@@ -6,11 +6,11 @@ export const routes = {
         icon: FiTerminal,
     },
     skills: {
-        name: "Skills",
+        name: "Heroes",
         icon: FiZap,
     },
     contact: {
-        name: "Contact",
+        name: "Blessings",
         icon: FiSend,
     },
 };

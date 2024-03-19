@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import { Heading, Avatar, Box, Center, Image, Flex, Text, Stack, useColorModeValue, ThemingProps, chakra, SimpleGrid, Stat, StatLabel, StatNumber, VStack } from "@chakra-ui/react";
 import { portfolio } from "@config";
-import { Libs } from "./Icons";
+import { Socials } from "./Icons";
 
 const Card: FC<{
     name?: string;
@@ -55,16 +55,16 @@ const StatsCard: FC<{
 
 export const Profile: FC = () => {
     const stats = [
-        { stat: "React Native", title: "Expand on", icon: <Libs.ReactNative.icon /> },
-        { stat: "Typescript", title: "Expand on", icon: <Libs.Typescript.icon /> },
-        { stat: "NodeJS", title: "Expand on", icon: <Libs.NodeJS.icon /> },
+        { stat: "GitHub", title: "Expand on", icon: <Socials.GitHub /> },
+        { stat: "LinkedIn", title: "Expand on", icon: <Socials.LinkedIn /> },
+        { stat: "Twitter", title: "Expand on", icon: <Socials.Twitter /> },
     ];
     return (
         <Box minW={"10vh"}>
             <Card avatarSize={"2xl"} />
             <Box w={"full"} mx={"auto"} pt={1} px={{ base: 2, sm: 12, md: 17 }}>
                 <chakra.h1 textAlign={"center"} fontSize={"xl"} pb={1} fontWeight={"bold"}>
-                    Current Focuses
+                    Find me here
                 </chakra.h1>
                 <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
                     {stats.map(({ stat, title, icon }, index) => (
