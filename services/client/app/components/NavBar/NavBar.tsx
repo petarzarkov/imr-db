@@ -33,7 +33,7 @@ export const NavBar: FC = () => {
     const { theme, setTheme } = useThemeProvider();
     const { toggleColorMode } = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const Links = useMemo(() => Object.entries(routes), undefined);
+    const Links = useMemo(() => Object.entries(routes), []);
     const LinksRendered = useMemo(
         () =>
             Links.map(([link, info]) => (

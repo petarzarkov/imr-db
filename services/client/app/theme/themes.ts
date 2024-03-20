@@ -18,10 +18,11 @@ const genTheme = (primaryColor: Record<string | number, string>) =>
         },
     });
 
-export type ColorTheme = Exclude<keyof typeof chakraTheme.colors, "transparent" | "black" | "white" | "blackAlpha" | "whiteAlpha" | "current">;
+export type ColorTheme = Exclude<keyof typeof chakraTheme.colors, "black" | "transparent" | "white" | "blackAlpha" | "whiteAlpha" | "current">;
 export const themes = Object.entries(chakraTheme.colors).reduce(
     (prev, curr) => {
-        if (curr?.[1] && curr?.[1]?.[50] && !curr?.[0].includes("Alpha")) {
+        console.log(curr?.[0], curr?.[1]);
+        if (curr?.[1] && curr?.[1]?.["50"] && !curr?.[0].includes("Alpha")) {
             prev[curr[0] as ColorTheme] = genTheme(curr[1] as Record<number, string>);
         }
 

@@ -4,7 +4,9 @@ import { ProviderBase, Context, ContextSettings } from "./ThemeContext";
 import { themes, ColorTheme } from "@theme";
 import { ChakraProvider } from "@chakra-ui/react";
 
-export class ThemeProvider extends React.Component {
+export class ThemeProvider extends React.Component<{
+    children: React.ReactNode;
+}> {
     isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     state: ProviderBase = {
         theme: "gray",
