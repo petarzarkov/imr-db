@@ -2,15 +2,13 @@ import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { DefaultConfig, defaultConfig } from "@const";
 import { ResourceUsageModel } from "@modules/resource/usage.module";
 import { ServeStaticModule } from "@nestjs/serve-static";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { cwd } from "node:process";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { RequestIdMiddleware } from "@middlewares/request-id.middleware";
 import { HttpMiddleware } from "@middlewares/http.middleware";
 import { ServiceModule } from "@api/service/service.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Hero } from "@db/entities/heroes/hero.entity";
-import { Blessing } from "@db/entities/blessings/blessing.entity";
 
 @Module({
     imports: [
@@ -27,6 +25,7 @@ import { Blessing } from "@db/entities/blessings/blessing.entity";
             imports: [ConfigModule],
             useFactory: (configService: ConfigService<DefaultConfig, true>) => {
                 const dbConfig = configService.get("db", { infer: true });
+                const isDev = configService.get("isDev", { infer: true });
                 return {
                     type: "postgres",
                     host: dbConfig.host,
@@ -34,7 +33,11 @@ import { Blessing } from "@db/entities/blessings/blessing.entity";
                     username: dbConfig.username,
                     password: dbConfig.password,
                     database: dbConfig.name,
-                    entities: [Hero, Blessing],
+                    entities: [resolve(__dirname, "../db/entities/**/*.entity{.ts,.js}")],
+                    migrations: [resolve(__dirname, "../db/migrations/**/*{.ts,.js}")],
+                    migrationsRun: true,
+                    autoLoadEntities: true,
+                    logging: isDev,
                     synchronize: true,
                 };
             },

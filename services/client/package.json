@@ -12,7 +12,7 @@
         "type": "git",
         "url": "https://github.com/petarzarkov/imr-db.git"
     },
-    "homepage": "TBD",
+    "homepage": "https://github.com/petarzarkov/imr-db",
     "scripts": {
         "start": "vite --host",
         "dev": "npm run start",

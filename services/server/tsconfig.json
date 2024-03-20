@@ -2,6 +2,8 @@
     "compilerOptions": {
         "module": "CommonJS",
         "target": "ESNext",
+        "outDir": "./build",
+        "lib": ["ES6"],
         "skipLibCheck": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
@@ -36,5 +38,6 @@
             "@filters/*": ["./app/filters/*"],
             "@contracts/*": ["app/contracts/*"]
         }
-    }
+    },
+    "include": ["app", "db"]
 }

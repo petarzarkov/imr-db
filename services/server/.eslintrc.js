@@ -12,7 +12,7 @@ module.exports = {
         tsconfigRootDir: __dirname,
         sourceType: "module",
         ecmaVersion: "latest",
-        project: ["tsconfig.build.json"],
+        project: ["tsconfig.json"],
     },
     ignorePatterns: ["**/*.js", "**/*.d.ts", "node_modules", "**/*.md", "**/*.json"],
     rules: {

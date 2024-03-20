@@ -1,13 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, Check } from "typeorm";
 
 @Entity()
 export class Blessing {
     @PrimaryGeneratedColumn()
         id: number;
 
-    @Column()
+    @Column("text")
         type: string;
 
-    @Column()
+    @Column("text")
         rank: string;
+
+    @Column()
+    @Check("rating", "\"rating\" >= 0 AND \"rating\" <= 5")
+        rating: number;
 }

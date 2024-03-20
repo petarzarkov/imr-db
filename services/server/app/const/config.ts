@@ -38,10 +38,10 @@ export const defaultConfig = () => {
         },
         db: {
             name: process.env.DB_NAME || "imr-db",
-            host: process.env.DB_HOST || "imr-db",
+            host: process.env.DB_HOST || "localhost",
             port: Number(process.env.DB_PORT) || 6544,
-            username: process.env.DB_USERNAME || "imr-db",
-            password: process.env.DB_PASSWORD || "imr-db",
+            username: process.env.DB_USERNAME || "postgres",
+            password: process.env.DB_PASSWORD || "postgres",
         },
     };
 

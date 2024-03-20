@@ -7,24 +7,23 @@
     },
     "license": "MIT",
     "version": "0.0.1",
-    "main": "./build/main.js",
+    "main": "./build/db/main.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/petarzarkov/imr-db.git"
     },
-    "homepage": "TBD",
+    "homepage": "https://github.com/petarzarkov/imr-db",
     "scripts": {
         "clean": "rimraf ./build/**",
-        "start": "node ./build/main.js",
-        "prebuild": "rimraf build",
-        "build": "nest build -p tsconfig.build.json",
-        "predev": "rimraf build",
+        "start": "node ./build/app/main.js",
+        "prebuild": "pnpm run clean",
+        "build": "nest build",
+        "predev": "pnpm run clean",
         "dev": "nest start --watch",
-        "typeorm": "typeorm-ts-node-commonjs",
-        "migration:create": "npx typeorm-ts-node-commonjs migration:create",
-        "migration:generate": "npx typeorm-ts-node-commonjs migration:generate -d ./services/server/db/data-source.ts",
-        "migration:up": "npx typeorm-ts-node-commonjs migration:run -d ./services/server/db/data-source.ts",
-        "migration:down": "npx typeorm-ts-node-commonjs migration:revert -d ./services/server/db/data-source.ts",
+        "mig:create": "typeorm migration:create",
+        "mig:gen": "npx typeorm-ts-node-commonjs -d db/config.ts migration:generate -p db/migrations/gen",
+        "mig:run": "npx typeorm-ts-node-commonjs migration:run -d db/config.ts",
+        "mig:rev": "npx typeorm-ts-node-commonjs migration:revert -d db/config.ts",
         "lint": "eslint . -c .eslintrc.js --max-warnings 0",
         "lint:fix": "eslint . -c .eslintrc.js --fix"
     },
@@ -51,6 +50,7 @@
     },
     "devDependencies": {
         "@nestjs/testing": "^10.3.4",
-        "@nestjs/cli": "^10.3.2"
+        "@nestjs/cli": "^10.3.2",
+        "tsconfig-paths": "^4.2.0"
     }
 }
