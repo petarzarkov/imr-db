@@ -1,36 +1,41 @@
-import { Mark } from "../entities/mark/marks.entity";
+import { HeroMark, HeroMarkEntity } from "../entities/heroes/hero.mark.entity";
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class AddMarks1710949221324 implements MigrationInterface {
-    marks: Omit<Mark, "id">[] = [
+    marks: Omit<HeroMarkEntity, "id">[] = [
         {
-            name: "Force",
+            mark: HeroMark.FORCE,
             note: null,
-            icon_url: "https://drive.google.com/thumbnail?id=1AtitYjr97bh_QBezx6Oc2mtTsMnUq5GT&sz=w200h200"
+            icon_url: "https://static.wikia.nocookie.net/infinitemagicraidofficial/images/0/09/Force.png/revision/latest/scale-to-width-down/50?cb=20230628024637"
         },
         {
-            name: "Blue",
+            mark: HeroMark.BLUE,
             note: null,
-            icon_url: "https://drive.google.com/thumbnail?id=1EzRIWDq6bTd10X2VDGlJ0N_KMJigPL-Q&sz=w200h200"
+            icon_url: "https://static.wikia.nocookie.net/infinitemagicraidofficial/images/1/16/Blue.png/revision/latest/scale-to-width-down/50?cb=20230627083130"
         },
         {
-            name: "Red",
+            mark: HeroMark.RED,
             note: null,
             icon_url: "https://drive.google.com/thumbnail?id=1r-rTNh6G-J1ySZac98KqDLsuKKruMJXK&sz=w200h200"
+        },
+        {
+            mark: HeroMark.GREEN,
+            note: null,
+            icon_url: "https://static.wikia.nocookie.net/infinitemagicraidofficial/images/7/72/Green.png/revision/latest/scale-to-width-down/50?cb=20230627082337"
         },
     ];
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        const markRepo = queryRunner.manager.getRepository(Mark);
+        const markRepo = queryRunner.manager.getRepository(HeroMarkEntity);
 
         await markRepo.insert(this.marks);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        const markRepo = queryRunner.manager.getRepository(Mark);
+        const markRepo = queryRunner.manager.getRepository(HeroMarkEntity);
 
         for (const mark of this.marks) {
-            await markRepo.delete({ name: mark.name });
+            await markRepo.delete({ mark: mark.mark });
         }
     }
 

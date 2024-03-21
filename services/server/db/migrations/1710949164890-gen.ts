@@ -5,31 +5,13 @@ export class Gen1710949164890 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-            CREATE TABLE "mark" (
+            CREATE TABLE "hero_type_entity" (
                 "id" SERIAL NOT NULL,
-                "name" text NOT NULL,
+                "type" text NOT NULL,
                 "icon_url" text NOT NULL,
-                "note" text,
-                CONSTRAINT "UQ_badcf8dcb33856bda5e4057a7f9" UNIQUE ("name"),
-                CONSTRAINT "UQ_badcf8dcb33856bda5e4057a7f9" UNIQUE ("name"),
-                CONSTRAINT "PK_0c6d4afd73cc2b4eee5a926aafc" PRIMARY KEY ("id")
-            )
-        `);
-        await queryRunner.query(`
-            CREATE TABLE "emblem" (
-                "id" SERIAL NOT NULL,
-                "image_url" text NOT NULL,
-                CONSTRAINT "PK_26180bde886e36f518cb65ddadb" PRIMARY KEY ("id")
-            )
-        `);
-        await queryRunner.query(`
-            CREATE TABLE "faction" (
-                "id" SERIAL NOT NULL,
-                "name" text NOT NULL,
-                "icon_url" text NOT NULL,
-                "note" text,
-                CONSTRAINT "UQ_51b7d060b06c5b3ed9e3411f6bc" UNIQUE ("name"),
-                CONSTRAINT "PK_5935637aa4ecd999ac0555ae5a6" PRIMARY KEY ("id")
+                "description" text,
+                CONSTRAINT "UQ_e688b53dcfe0bc983dc3728a393" UNIQUE ("type"),
+                CONSTRAINT "PK_dfdeb43b7ace613b691f307b4e7" PRIMARY KEY ("id")
             )
         `);
         await queryRunner.query(`
@@ -74,35 +56,51 @@ export class Gen1710949164890 implements MigrationInterface {
             )
         `);
         await queryRunner.query(`
-            CREATE TYPE "public"."hero_type_enum" AS ENUM('attack', 'defense', 'support')
-        `);
-        await queryRunner.query(`
-            CREATE TYPE "public"."hero_rarity_enum" AS ENUM(
-                'common',
-                'uncommon',
-                'rare',
-                'epic',
-                'legend',
-                'mythic'
+            CREATE TABLE "emblem" (
+                "id" SERIAL NOT NULL,
+                "image_url" text NOT NULL,
+                CONSTRAINT "PK_26180bde886e36f518cb65ddadb" PRIMARY KEY ("id")
             )
         `);
         await queryRunner.query(`
-            CREATE TYPE "public"."hero_mark_enum" AS ENUM('force', 'green', 'red')
+            CREATE TABLE "faction" (
+                "id" SERIAL NOT NULL,
+                "name" text NOT NULL,
+                "icon_url" text NOT NULL,
+                "description" text NOT NULL,
+                "note" text,
+                CONSTRAINT "UQ_51b7d060b06c5b3ed9e3411f6bc" UNIQUE ("name"),
+                CONSTRAINT "PK_5935637aa4ecd999ac0555ae5a6" PRIMARY KEY ("id")
+            )
+        `);
+        await queryRunner.query(`
+            CREATE TABLE "hero_mark_entity" (
+                "id" SERIAL NOT NULL,
+                "mark" text NOT NULL,
+                "icon_url" text NOT NULL,
+                "note" text,
+                CONSTRAINT "UQ_08bac9915edf3035cecde9e2f19" UNIQUE ("mark"),
+                CONSTRAINT "PK_f510baeecf049e00c65880502a5" PRIMARY KEY ("id")
+            )
         `);
         await queryRunner.query(`
             CREATE TABLE "hero" (
                 "id" SERIAL NOT NULL,
                 "name" text NOT NULL,
-                "type" "public"."hero_type_enum" NOT NULL,
-                "rarity" "public"."hero_rarity_enum" NOT NULL,
-                "mark" "public"."hero_mark_enum" NOT NULL,
+                "rarity" character varying NOT NULL,
+                "description" text NOT NULL,
                 "stat_focus" text NOT NULL,
+                "gear_focus" text NOT NULL,
                 "note" text,
                 "icon_url" text NOT NULL,
+                "typeId" integer,
+                "markId" integer,
                 "factionId" integer,
                 "emblemId" integer,
                 "ratingId" integer,
                 CONSTRAINT "UQ_615f5a253cc6e2f8aacb054ad32" UNIQUE ("name"),
+                CONSTRAINT "REL_d06115f3ab6ddfd2947a0ad302" UNIQUE ("typeId"),
+                CONSTRAINT "REL_8b6813cb58ba171945c9b3ff02" UNIQUE ("markId"),
                 CONSTRAINT "REL_38eb06450becc68cf22e9f0c4b" UNIQUE ("factionId"),
                 CONSTRAINT "REL_7242658931a55538dc87e2a9d7" UNIQUE ("emblemId"),
                 CONSTRAINT "REL_bc20b91bf54a0f8396fdc28b0a" UNIQUE ("ratingId"),
@@ -121,6 +119,14 @@ export class Gen1710949164890 implements MigrationInterface {
                 ),
                 CONSTRAINT "PK_bb4bb2b1ebe680f10cf6addba54" PRIMARY KEY ("id")
             )
+        `);
+        await queryRunner.query(`
+            ALTER TABLE "hero"
+            ADD CONSTRAINT "FK_d06115f3ab6ddfd2947a0ad3023" FOREIGN KEY ("typeId") REFERENCES "hero_type_entity"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+        `);
+        await queryRunner.query(`
+            ALTER TABLE "hero"
+            ADD CONSTRAINT "FK_8b6813cb58ba171945c9b3ff022" FOREIGN KEY ("markId") REFERENCES "hero_mark_entity"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
         await queryRunner.query(`
             ALTER TABLE "hero"
@@ -147,22 +153,19 @@ export class Gen1710949164890 implements MigrationInterface {
             ALTER TABLE "hero" DROP CONSTRAINT "FK_38eb06450becc68cf22e9f0c4b0"
         `);
         await queryRunner.query(`
+            ALTER TABLE "hero" DROP CONSTRAINT "FK_8b6813cb58ba171945c9b3ff022"
+        `);
+        await queryRunner.query(`
+            ALTER TABLE "hero" DROP CONSTRAINT "FK_d06115f3ab6ddfd2947a0ad3023"
+        `);
+        await queryRunner.query(`
             DROP TABLE "blessing"
         `);
         await queryRunner.query(`
             DROP TABLE "hero"
         `);
         await queryRunner.query(`
-            DROP TYPE "public"."hero_mark_enum"
-        `);
-        await queryRunner.query(`
-            DROP TYPE "public"."hero_rarity_enum"
-        `);
-        await queryRunner.query(`
-            DROP TYPE "public"."hero_type_enum"
-        `);
-        await queryRunner.query(`
-            DROP TABLE "hero_rating"
+            DROP TABLE "hero_mark_entity"
         `);
         await queryRunner.query(`
             DROP TABLE "faction"
@@ -171,7 +174,10 @@ export class Gen1710949164890 implements MigrationInterface {
             DROP TABLE "emblem"
         `);
         await queryRunner.query(`
-            DROP TABLE "mark"
+            DROP TABLE "hero_rating"
+        `);
+        await queryRunner.query(`
+            DROP TABLE "hero_type_entity"
         `);
     }
 

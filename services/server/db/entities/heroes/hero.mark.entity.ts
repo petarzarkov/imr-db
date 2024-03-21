@@ -1,16 +1,23 @@
-import { Entity, Column, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+
+export enum HeroMark {
+    FORCE = "force",
+    RED = "red",
+    GREEN = "green",
+    BLUE = "blue"
+}
 
 @Entity()
-@Unique(["name"])
-export class Mark {
+export class HeroMarkEntity {
     @PrimaryGeneratedColumn()
         id: number;
 
     @Column({
         type: "text",
         unique: true,
+        enum: HeroMark,
     })
-        name: string;
+        mark: HeroMark;
 
     @Column("text")
         icon_url: string;

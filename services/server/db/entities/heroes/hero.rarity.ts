@@ -1,7 +1,7 @@
 export enum HeroRarity {
     COMMON = "common",
-    UNCOMMON = "uncommon",
     RARE = "rare",
+    ELITE = "elite",
     EPIC = "epic",
     LEGEND = "legend",
     MYTHIC = "mythic",

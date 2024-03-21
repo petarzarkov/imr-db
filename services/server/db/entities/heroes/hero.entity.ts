@@ -3,8 +3,8 @@ import { Emblem } from "../emblems/emblems.entity";
 import { Faction } from "../factions/factions.entity";
 import { HeroRating } from "./hero.rating.entity";
 import { HeroRarity } from "./hero.rarity";
-import { HeroMark } from "./hero.mark";
-import { HeroType } from "./hero.type";
+import { HeroMarkEntity } from "./hero.mark.entity";
+import { HeroTypeEntity } from "./hero.type.entity";
 
 @Entity()
 export class Hero {
@@ -17,17 +17,27 @@ export class Hero {
     })
         name: string;
 
-    @Column("enum", { enum: HeroType })
-        type: HeroType;
+    @OneToOne(() => HeroTypeEntity)
+    @JoinColumn()
+        type: HeroTypeEntity;
 
-    @Column("enum", { enum: HeroRarity })
+    @Column({ enum: HeroRarity })
         rarity: HeroRarity;
 
-    @Column("enum", { enum: HeroMark })
-        mark: HeroMark;
+    @OneToOne(() => HeroMarkEntity)
+    @JoinColumn()
+        mark: HeroMarkEntity;
+
+    @Column({
+        type: "text",
+    })
+        description: string;
 
     @Column("text")
         stat_focus: string;
+
+    @Column("text")
+        gear_focus: string;
 
     @Column({
         type: "text",

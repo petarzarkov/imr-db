@@ -1,27 +1,29 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
+export enum HeroType {
+    ATTACK = "attack",
+    DEFENSE = "defense",
+    SUPPORT = "support"
+}
+
 @Entity()
-export class Faction {
+export class HeroTypeEntity {
     @PrimaryGeneratedColumn()
         id: number;
 
     @Column({
         type: "text",
         unique: true,
+        enum: HeroType,
     })
-        name: string;
+        type: HeroType;
 
     @Column("text")
         icon_url: string;
 
     @Column({
         type: "text",
-    })
-        description: string;
-
-    @Column({
-        type: "text",
         default: null,
     })
-        note?: string | null;
+        description?: string | null;
 }
